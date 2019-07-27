@@ -1,26 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import { BrowserRouter, Router, Route, Link } from "react-router-dom";
+import axios from 'axios'
+import Search from './Components/Search';
+import Navigation from './Components/Navigation'
+import PhotoList from './Components/PhotoList'
+import apiKey from './config';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+
+  constructor() {
+
+    super();
+    this.state = {
+      photos: [],
+      loading: true,
+      title: 'Cats'
+    };
+  }
+
+  componentDidMount(){
+    this.performSearch();
+  }
+
+  performSearch = (query = 'home') => {
+    axios.get(`https://api.unsplash.com/search/photos/?page=1&per_page=16&query=${query}&client_id=${apiKey}`)
+      .then(response => {
+        this.setState({
+          photos: response.data.results,
+          loading: false,
+          title: query
+        })
+        .catch(err => {
+          console.log('Something went wrong while fetching data!', err)
+        })
+      })
+  }
+
+  render() {
+    return (
+      <BrowserRouter>
+        <div className="container">
+            <Search onSearch={this.performSearch}/>
+            <Navigation />
+          {
+            (this.state.loading)
+            ? <p>Loading...</p>
+            : <PhotoList data={this.state.photos} title={this.state.title} />
+          }
+        </div>
+      </BrowserRouter>
+  )
+  }
 }
-
-export default App;
