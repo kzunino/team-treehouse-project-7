@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { BrowserRouter, Router, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import axios from 'axios'
 import Search from './Components/Search';
 import Navigation from './Components/Navigation'
@@ -14,7 +14,7 @@ export default class App extends Component {
     this.state = {
       photos: [],
       loading: true,
-      title: 'Cats'
+      title: ''
     };
   }
 
@@ -40,8 +40,10 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <div className="container">
-            <Search onSearch={this.performSearch}/>
-            <Navigation />
+            <Search onSearch={this.performSearch} />
+            <Navigation onSearch={this.performSearch}/>
+          {/*            <Route path={"/"} render={(props) => <Search onSearch={this.performSearch} />} />
+                      <Route path={"/"} render={(props) => <Navigation onSearch={this.performSearch} />} />*/}
           {
             (this.state.loading)
             ? <p>Loading...</p>
