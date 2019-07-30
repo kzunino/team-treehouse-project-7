@@ -4,6 +4,7 @@ import axios from 'axios'
 import Search from './Components/Search';
 import Navigation from './Components/Navigation'
 import PhotoList from './Components/PhotoList'
+import Page404 from './Components/Page404'
 import apiKey from './config';
 
 export default class App extends Component {
@@ -41,7 +42,7 @@ export default class App extends Component {
   }
 
 
-  performSearch = (query = 'home') => {
+  performSearch = (query = 'Photos') => {
     this.setState({
       loading: true
     })
@@ -84,6 +85,7 @@ export default class App extends Component {
                 <Route path="/dogs" render={() =><PhotoList data={this.state.dogPhotos} title={'Dogs'} />} />
                 <Route path="/computers" render={() =><PhotoList data={this.state.computerPhotos} title={'Computers'} />} />
                 <Route path="/search/:query" render={() =><PhotoList data={this.state.photos} title={this.state.title} />} />
+                <Route component={Page404} />
               </Switch>
           }
         </div>
