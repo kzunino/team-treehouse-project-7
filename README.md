@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+This React Gallery app fetches data from Unsplash's api an returns a photo gallery. There are three main pages that and a searchbar to make custom queries.
+
 ## Available Scripts
 
 In the project directory, you can run:

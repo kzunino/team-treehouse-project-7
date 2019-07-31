@@ -9,40 +9,53 @@ import apiKey from './config';
 
 export default class App extends Component {
 
+/* stores all of the state that the app requires to run */
   constructor() {
-
     super();
     this.state = {
       photos: [],
-      catPhotos: [],
-      dogPhotos: [],
-      computerPhotos: [],
+      travelPhotos: [],
+      hikingPhotos: [],
+      campingPhotos: [],
       loading: true,
       title: ''
     };
   }
 
+/* component runs when page starts or refrehses.
+  * logic checks for paramters to keep UI and URL in line
+  *
+
+  */
+
   componentDidMount(){
-    this.performSearch();
-
-    this.getPhotos('cat')
-    .then(response => this.setState({
-      catPhotos: response.data.results
-    }))
-
-    this.getPhotos('dog')
-    .then(response => this.setState({
-      dogPhotos: response.data.results
-    }))
-
-    this.getPhotos('computer')
-    .then(response => this.setState({
-      computerPhotos: response.data.results
-    }))
+    if (document.location.pathname === "/"){
+    this.performSearch("home");
+  } else if (document.location.pathname.indexOf('/search/') === 0){
+    this.performSearch(document.location.pathname.split('/search/').pop().toString());
   }
 
+    this.getPhotos('travel')
+    .then(response => this.setState({
+      travelPhotos: response.data.results
+    }))
 
-  performSearch = (query = 'Photos') => {
+    this.getPhotos('hiking')
+    .then(response => this.setState({
+      hikingPhotos: response.data.results
+    }))
+
+    this.getPhotos('camping')
+    .then(response => this.setState({
+      campingPhotos: response.data.results
+    }))
+
+    this.setState({
+      loading: false
+    })
+  }
+
+  performSearch = query => {
     this.setState({
       loading: true
     })
@@ -53,9 +66,9 @@ export default class App extends Component {
           loading: false,
           title: query
         })
-        .catch(err => {
-          console.log('Something went wrong while fetching data!', err)
-        })
+      })
+      .catch(err => {
+        console.log('Something went wrong while fetching data!', err)
       })
   }
 
@@ -81,9 +94,10 @@ export default class App extends Component {
             :
               <Switch>
                 <Route exact path="/" render={() =><PhotoList data={this.state.photos} title={this.state.title} />} />
-                <Route path="/cats" render={() =><PhotoList data={this.state.catPhotos} title={'Cats'} />} />
-                <Route path="/dogs" render={() =><PhotoList data={this.state.dogPhotos} title={'Dogs'} />} />
-                <Route path="/computers" render={() =><PhotoList data={this.state.computerPhotos} title={'Computers'} />} />
+                {/*<Route exact path="/" render={() =><Redirect to="/cats" />} />*/}
+                <Route path="/travel" render={() =><PhotoList data={this.state.travelPhotos} title={'Travel'} />} />
+                <Route path="/hiking" render={() =><PhotoList data={this.state.hikingPhotos} title={'Hiking'} />} />
+                <Route path="/camping" render={() =><PhotoList data={this.state.campingPhotos} title={'Camping'} />} />
                 <Route path="/search/:query" render={() =><PhotoList data={this.state.photos} title={this.state.title} />} />
                 <Route component={Page404} />
               </Switch>

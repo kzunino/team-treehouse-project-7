@@ -8,7 +8,7 @@ const PhotoList = props => {
   let photos;
   if (results.length > 0) {
     photos = results.map(photo =>
-      <Photo url={photo.urls.thumb} key={photo.id} />);
+      <Photo url={photo.urls.small} alt={photo.alt_description} key={photo.id} />);
   }else{
     photos = <NotFound />
   }
