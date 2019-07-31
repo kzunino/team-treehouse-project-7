@@ -4,6 +4,8 @@ import Photo from './Photo';
 
 const PhotoList = props => {
 
+// renders each photo from data passed to PhotoList
+
   const results = props.data;
   let photos;
   if (results.length > 0) {
