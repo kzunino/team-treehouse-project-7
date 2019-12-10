@@ -6,10 +6,6 @@ import Navigation from "./Components/Navigation";
 import PhotoList from "./Components/PhotoList";
 import Page404 from "./Components/Page404";
 //import apiKey from "./config";
-const aws = require("aws-sdk");
-let s3 = new aws.S3({
-  apiKey: process.env.apiKey
-});
 
 export default class App extends Component {
   /* stores all of the state that the app requires to run */
@@ -31,8 +27,7 @@ export default class App extends Component {
    */
 
   componentDidMount() {
-    console.log(s3.apiKey);
-    console.log(process.env.apiKey);
+    console.log(process.env.REACT_APP_apiKey);
 
     if (document.location.pathname === "/") {
       this.performSearch("home");
@@ -76,7 +71,7 @@ export default class App extends Component {
     });
     axios
       .get(
-        `https://api.unsplash.com/search/photos/?page=1&per_page=16&query=${query}&client_id=${s3.apiKey}`
+        `https://api.unsplash.com/search/photos/?page=1&per_page=16&query=${query}&client_id=${process.env.REACT_APP_apiKey}`
       )
       .then(response => {
         this.setState({
@@ -95,7 +90,7 @@ export default class App extends Component {
   getPhotos = query => {
     return axios
       .get(
-        `https://api.unsplash.com/search/photos/?page=1&per_page=16&query=${query}&client_id=${s3.apiKey}`
+        `https://api.unsplash.com/search/photos/?page=1&per_page=16&query=${query}&client_id=${process.env.REACT_APP_apiKey}`
       )
       .catch(err => {
         console.log("Something went wrong while fetching data!", err);
