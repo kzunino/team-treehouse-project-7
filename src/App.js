@@ -5,8 +5,8 @@ import Search from "./Components/Search";
 import Navigation from "./Components/Navigation";
 import PhotoList from "./Components/PhotoList";
 import Page404 from "./Components/Page404";
-//import apiKey from './config';
-require("dotenv").config();
+import apiKey from "./config";
+var S3 = require("aws-sdk/clients/s3");
 
 export default class App extends Component {
   /* stores all of the state that the app requires to run */
@@ -60,6 +60,7 @@ export default class App extends Component {
     this.setState({
       loading: false
     });
+    console.log(S3.apiKey);
   }
 
   // performSearch sends api request for photos from search input
@@ -70,7 +71,7 @@ export default class App extends Component {
     });
     axios
       .get(
-        `https://api.unsplash.com/search/photos/?page=1&per_page=16&query=${query}&client_id=${process.env.BASE_URL}`
+        `https://api.unsplash.com/search/photos/?page=1&per_page=16&query=${query}&client_id=${apiKey}`
       )
       .then(response => {
         this.setState({
@@ -89,7 +90,7 @@ export default class App extends Component {
   getPhotos = query => {
     return axios
       .get(
-        `https://api.unsplash.com/search/photos/?page=1&per_page=16&query=${query}&client_id=${process.env.BASE_URL}`
+        `https://api.unsplash.com/search/photos/?page=1&per_page=16&query=${query}&client_id=${apiKey}`
       )
       .catch(err => {
         console.log("Something went wrong while fetching data!", err);
