@@ -32,6 +32,7 @@ export default class App extends Component {
 
   componentDidMount() {
     console.log(s3.apiKey);
+    console.log(process.env.apiKey);
 
     if (document.location.pathname === "/") {
       this.performSearch("home");
