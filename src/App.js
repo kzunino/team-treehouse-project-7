@@ -27,8 +27,6 @@ export default class App extends Component {
    */
 
   componentDidMount() {
-    console.log(process.env.REACT_APP_apiKey);
-
     if (document.location.pathname === "/") {
       this.performSearch("home");
     } else if (document.location.pathname.indexOf("/search/") === 0) {
