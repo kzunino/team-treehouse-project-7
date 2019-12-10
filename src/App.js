@@ -13,12 +13,12 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      photos: null,
-      travelPhotos: null,
-      hikingPhotos: null,
-      campingPhotos: null,
+      photos: [],
+      travelPhotos: [],
+      hikingPhotos: [],
+      campingPhotos: [],
       loading: true,
-      title: null
+      title: ""
     };
   }
 
