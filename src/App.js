@@ -60,7 +60,6 @@ export default class App extends Component {
     this.setState({
       loading: false
     });
-    console.log(S3.apiKey);
   }
 
   // performSearch sends api request for photos from search input
