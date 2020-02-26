@@ -11,7 +11,7 @@
     "react-scripts": "3.0.1",
     "unsplash-js": "^5.0.0"
   },
-  "homepage": "https://kzunino.github.io/team-treehouse-project-7/",
+  "homepage": "https://kz-photo-gallery-react-app.herokuapp.com/",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
